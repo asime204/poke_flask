@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+    <h1>PokeDex</h1>
+
+    <form method="POST" class="container col-4">
+        {{ form.hidden_tag() }}
+
+        {{ form.pokemon(class='form-control', placeholder='Pokemon name or number') }}
+        {{ form.submit(class='btn btn-primary') }}
+    </form>
+
+<!-- use pk(pokemon dict) like the my_text (pk[name], pk{atk}, ect) to print out results of form submission -->
+
+    <!-- if statement here that populates pokemon and stats -->
+    <!-- connect results of api stats and post to db -->
+    <!-- maybe rework feed code to update 5 bootstrap cards for the pokemon in the team from db -->
+    <!-- pokemon properties to include:
+        pokemon name 
+    from the stats section:
+        base stat for hp
+        base stat for defense
+        base stat for attack
+    from the sprites section:
+        front_shiny (URL to the image) or any other image you like more 
+    from the abilities section:
+        At Least One Ability
+    and any other properties you might find that interest you. -->
+    {% if request.method == 'POST' %}
+            <p>Pokemon Name: {{ pk["Name"].title() }}</p>
+            <p>HP: {{ pk["Base HP"] }}</p>
+            <p></p>
+    {% endif %}
+
+    {% endblock %}
