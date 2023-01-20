@@ -18,7 +18,7 @@
     <!-- maybe rework feed code to update 5 bootstrap cards for the pokemon in the team from db -->
 
     {% if request.method == 'POST' %}
-            <img src="{{ pk['Front Shiny'] }}">
+            <img src="{{ pk['Front Shiny'] }}" alt="..." >
             <p>Pokemon Name: {{ pk["Name"].title() }}</p> 
             <p>HP: {{ pk["Base HP"] }}</p>
             <p>ATK: {{ pk["Base ATK"] }}</p>
