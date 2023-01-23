@@ -1,6 +1,6 @@
 from flask import Flask
 from config import Config
-from .models import db, User
+from .models import db, User, Pokemon
 from flask_migrate import Migrate
 from flask_login import LoginManager
 

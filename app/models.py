@@ -24,33 +24,28 @@ class User(db.Model, UserMixin):
     def saveToDB(self):
         db.session.add(self)
         db.session.commit()
+    def saveChanges(self):
+        db.session.commit()
 
+class Pokemon(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    Name = db.Column(db.String(255), nullable=False)
+    HP = db.Column(db.Integer, nullable=False)
+    ATK = db.Column(db.Integer, nullable=False)
+    DEF = db.Column(db.Integer, nullable=False)
+    SPD = db.Column(db.Integer, nullable=False)
+    Ability = db.Column(db.String(255), nullable=False)
+    ImgURL = db.Column(db.String(255), nullable=False)
 
-# class Pokemon(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     Name = db.Column(db.String(255), nullable=False)
-#     HP = db.Column(db.Integer, nullable=False)
-#     ATK = db.Column(db.Integer, nullable=False)
-#     DEF = db.Column(db.Integer, nullable=False)
-#     SPD = db.Column(db.Integer, nullable=False)
-#     Ability = db.Column(db.String(255), nullable=False)
-#     ImgURL = db.Column(db.String(255), nullable=False)
+    def __init__(self, Name, HP, ATK, DEF, SPD, Ability, ImgURL):
+        self.Name = Name
+        self.HP = HP
+        self.ATK = ATK
+        self.DEF = DEF
+        self.SPD = SPD
+        self.Ability = Ability
+        self.ImgURL = ImgURL
 
-#     def __init__(self, Name, HP, ATK, DEF, SPD, Ability, ImgURL):
-#         self.name = Name
-#         self.HP = HP
-#         self.ATK = ATK
-#         self.DEF = DEF
-#         self.SPD = SPD
-#         self.Ability = Ability
-#         self.ImgURL = ImgURL
-
-#     def saveToDB(self):
-#         db.session.add(self)
-#         db.session.commit()
-
-
-# class User_Pokemon(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-#     pokemon_id = db.Column(db.Integer, db.ForeignKey('pokemon.id'), nullable=False)
+    def saveToDB(self):
+        db.session.add(self)
+        db.session.commit()

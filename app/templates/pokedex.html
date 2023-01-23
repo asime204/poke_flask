@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+    <h1>PokeDex</h1>
+
+    <div class="search-bar">
+        <form method="POST" class="my-5 row">
+            <div class="col-md-6 mx-auto">
+                {{ form.pokemon(class='form-control', placeholder='Pokemon name or number') }}
+                {{ form.submit(class='btn btn-success') }}
+            </div>
+        </form>
+    </div>
+
+
+    {% if request.method == 'POST' %}
+      <div class="pokedex">
+        <div class="card my-5 mx-auto rounded" style="max-width: 600px">
+            <div class="row g-0">
+                <div class="col-md-4 pt-5 mt-5 rounded">
+                    <img src="{{ pk['Front Shiny'] }}" class="card-img-top rounded"
+                        alt="...">
+                </div>
+                <div class="col-md-8 rounded">
+                    <div class="card-body bg-dark text-white rounded text-center">
+                        <h5 class="card-title mt-4 mb-4">{{ pk["Name"].title() }}</h5>
+                        <p class="card-text mt-4 mb-4">
+                        <p>HP: {{ pk["Base HP"] }}</p>
+                        <p>ATK: {{ pk["Base ATK"] }}</p>
+                        <p>DEF: {{ pk["Base DEF"] }}</p>
+                        <p>SPD: {{ pk["Base SPD"] }}</p>
+                        <p>Ability: {{ pk["Ability"].title() }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% endblock %}
+
+    
