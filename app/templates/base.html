@@ -13,10 +13,11 @@
 <title>POKE PC</title>
 </head>
 <body>
-    <div style="text-align: center;">
-        <img style="display: block; margin: 0 auto;" src="{{ url_for('static', filename='banner.jpg') }}" alt="logo">
-    </div>
     {% include 'nav.html' %}
+    <div style="text-align: center;">
+        <img style="display: block; margin: 0 auto;" src="{{ url_for('static', filename='pokemon.png') }}" alt="logo">
+    </div>
+    
     {% with messages = get_flashed_messages(with_categories=True) %}
         {% if messages %}
             {% for c, m in messages %}
