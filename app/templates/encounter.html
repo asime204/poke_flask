@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% if current_user.is_authenticated %}
+    <div class="pokedex">
+        <div class="card my-5 mx-auto rounded" style="max-width: 600px">
+            <div class="row g-0">
+                <div class="col-md-4 pt-5 mt-5 rounded">
+                    <img src="{{ pokemon.ImgURL }}" class="card-img-top rounded" alt="...">
+                </div>
+                <div class="col-md-8 rounded">
+                    <div class="card-body bg-dark text-white rounded text-center">
+                        <h5 class="card-title mt-4 mb-4">{{ pokemon.Name.title() }}</h5>
+                        <p class="card-text mt-4 mb-4">
+                        <p>HP: {{ pokemon.HP }}</p>
+                        <p>ATK: {{ pokemon.ATK }}</p>
+                        <p>DEF: {{ pokemon.DEF }}</p>
+                        <p>SPD: {{ pokemon.SPD }}</p>
+                        <p>Ability: {{ pokemon.Ability.title() }}</p>
+                    </div>
+                    <div>
+                        {% if not owned %}
+                            <a class="btn btn-success" href="{{ url_for('catchPokemon', pokemon_id=pokemon.id) }}">Throw Pokeball</a>
+                        {% else %}
+                            <a class="btn btn-danger" href="{{ url_for('releasePokemon', pokemon_id=pokemon.id) }}">Release</a>
+                        {% endif %}
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}

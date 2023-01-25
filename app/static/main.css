@@ -8,6 +8,9 @@ body {
     background-color: black;
     color: white;
 }
+.navbar a {
+    color: red;
+}
 
 .pokedex{
     background-color: red;
@@ -15,7 +18,9 @@ body {
     border-radius: 10px;
 }
 
-
+.pokeball{
+    width: 100%;
+}
 .card {
     box-shadow: 0 0 10px #333333;
 }
@@ -34,4 +39,9 @@ body {
 h1 {
     text-align: center;
     margin-top: 35px;
+}
+
+img {
+    width: 400px;
+    height: 200px;
 }

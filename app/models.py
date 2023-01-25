@@ -35,7 +35,8 @@ class Pokemon(db.Model):
     DEF = db.Column(db.Integer, nullable=False)
     SPD = db.Column(db.Integer, nullable=False)
     Ability = db.Column(db.String(255), nullable=False)
-    ImgURL = db.Column(db.String(255), nullable=False)
+    ImgURL = db.Column(db.String(255), nullable=True)
+    user_pokemon = db.relationship('User_Pokemon', backref='pokemon', lazy=True)
 
     def __init__(self, Name, HP, ATK, DEF, SPD, Ability, ImgURL):
         self.Name = Name
@@ -48,4 +49,23 @@ class Pokemon(db.Model):
 
     def saveToDB(self):
         db.session.add(self)
+        db.session.commit()
+
+
+class User_Pokemon(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    pokemon_id = db.Column(db.Integer, db.ForeignKey('pokemon.id'), nullable=False)
+    user = db.relationship('User', backref='user_pokemon', lazy=True)
+
+    def __init__(self, user_id, pokemon_id):
+        self.user_id = user_id
+        self.pokemon_id = pokemon_id
+
+    def saveToDB(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def deleteFromDB(self):
+        db.session.delete(self)
         db.session.commit()
