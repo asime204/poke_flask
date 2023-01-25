@@ -22,7 +22,7 @@ def loginPage():
                 if user.password == password:
                     login_user(user)
                     flash(f'Successfully logged in! Welcome back {user.username}', category='success')                    
-                    return redirect(url_for('pokedex'))
+                    return redirect(url_for('getPokemon'))
 
                 else:
                     flash('wrong password', category='danger')
@@ -141,7 +141,7 @@ def encounterPokemon(pokemon_id):
                 return render_template('encounter.html', form=form, pokemon=existing_pokemon, owned=True)
             else:
                 return render_template('encounter.html', form=form, pokemon=existing_pokemon, owned=False)
-    return redirect(url_for('pokedex'))
+    return redirect(url_for('getPokemon'))
 
 @app.route('/pokedex/encounter/<int:pokemon_id>/catch', methods=["GET"])
 @login_required
@@ -156,12 +156,12 @@ def catchPokemon(pokemon_id):
             owned = {catch.pokemon_id for catch in my_pokemon}
             if pokemon_id in owned:
                 flash('You already own this Pokemon!', category='danger')
-                return  redirect(url_for('release'))
+                return  redirect(url_for('releasePokemon'))
             else:
                 pokeball = User_Pokemon(current_user.id, pokemon_id)
                 pokeball.saveToDB()
                 flash('Congratulations, you caught a new Pokemon!', category='success')
-                return redirect(url_for('pokedex'))
+                return redirect(url_for('getPokemon'))
     return
 
 
@@ -172,4 +172,20 @@ def releasePokemon(pokemon_id):
     if existing_pokemon:
         existing_pokemon.deleteFromDB()
         flash('You have released your Pokemon', category='warning')
-        return redirect(url_for('pokedex'))
+        return redirect(url_for('getPokemon'))
+
+@app.route('/myTeam', methods=["GET"])
+@login_required
+def getPokemon():
+    # Get all the Pokemon that the user has caught
+    caught_pokemon = User_Pokemon.query.filter_by(user_id=current_user.id).all()
+    # Initialize an empty list to store the information of the Pokemon
+    pokemon_list = []
+    # Iterate through the caught Pokemon
+    for caught in caught_pokemon:
+        # Get the information of the Pokemon from the Pokemon table
+        pokemon = Pokemon.query.filter_by(id=caught.pokemon_id).first()
+        # Append the information of the Pokemon to the list
+        pokemon_list.append(pokemon)
+    # Pass the list of Pokemon to the template
+    return render_template('pokeTeam.html', my_pokemon=pokemon_list)
