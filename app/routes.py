@@ -135,7 +135,7 @@ def encounterPokemon(pokemon_id):
             flash('This Pokemon is already owned by another user!', category='danger')
             return redirect(url_for('pokedex'))
         else:
-            # check the number of pokemon the user has
+            # check if the pokemon is owned by the user
             owned = {catch.pokemon_id for catch in my_pokemon}
             if pokemon_id in owned:
                 return render_template('encounter.html', form=form, pokemon=existing_pokemon, owned=True)
@@ -152,6 +152,7 @@ def catchPokemon(pokemon_id):
         # check the number of pokemon the user has
         if len(my_pokemon) >= 5:
             flash('Your party is full!', category='danger')
+            return redirect(url_for('getPokemon'))
         else:
             owned = {catch.pokemon_id for catch in my_pokemon}
             if pokemon_id in owned:
@@ -162,7 +163,6 @@ def catchPokemon(pokemon_id):
                 pokeball.saveToDB()
                 flash('Congratulations, you caught a new Pokemon!', category='success')
                 return redirect(url_for('getPokemon'))
-    return
 
 
 @app.route('/pokedex/encounter/<int:pokemon_id>/release', methods=["GET"])
